@@ -4,9 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package edu.wpi.first.wpilibj.templates;
-
 
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -24,25 +22,24 @@ public class RobotTemplate extends IterativeRobot {
     Console console = new Console();
     public Timer autonomousTimer;
     public DriverStationLCD LCD;
-    
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-       System.out.println("[INFO] ****************************");
-       System.out.println("[INFO] ****************************");
-       System.out.println("[INFO] ****************************");
-       System.out.println("[INFO] ****************************");
-       System.out.println("[INFO] ****** ROBOT IS READY FOR USE ******");
-       
-       console.init();
-       LCD = DriverStationLCD.getInstance();
-       LCD.clear();
+        System.out.println("[INFO] ****************************");
+        System.out.println("[INFO] ****************************");
+        System.out.println("[INFO] ****************************");
+        System.out.println("[INFO] ****************************");
+        System.out.println("[INFO] ****** ROBOT IS READY FOR USE ******");
 
-        
+        console.init();
+        LCD = DriverStationLCD.getInstance();
+        LCD.clear();
+
     }
-    
+
     public void autonomousInit() {
         console.autoInit();
     }
@@ -52,9 +49,9 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         console.autoRun();
-        
+
     }
-    
+
     public void teleopInit() {
         LCD.clear();
         console.teleopInit();
@@ -63,18 +60,18 @@ public class RobotTemplate extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
-    public void teleopPeriodic() {    
-    console.run();
+    public void teleopPeriodic() {
+        console.run();
     }
-    
+
     /**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-    
+
     }
-    
-    public void disabledPeriodic(){
+
+    public void disabledPeriodic() {
         console.disabled();
     }
 }

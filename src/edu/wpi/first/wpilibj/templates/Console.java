@@ -25,7 +25,7 @@ public class Console {
     public Relay wormgear;
     //public Relay something
     public Joystick joystick;
-    public Joystick joystick2;
+    // public Joystick joystick2;
     public Solenoid cock;
     public Solenoid uncock;
     public Solenoid lock;
@@ -43,13 +43,12 @@ public class Console {
         motorLeft = new Talon(1);
         motorRight = new Talon(2);
         System.out.println("[INFO] TALON[1|2]: Created!");
-        robotdrive = new RobotDrive(motorLeft, motorRight);
-        robotdrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
-        robotdrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
-
         elToro1 = new Talon(3);
         elToro2 = new Talon(4);
         System.out.println("[INFO] TALON[3|4]: Created!");
+        robotdrive = new RobotDrive(motorLeft, motorRight);
+        robotdrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+        robotdrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
         compressor = new Compressor(1, 1); // presureSwitchDigitalInput, RelayOut
         compressor.start();
@@ -58,7 +57,7 @@ public class Console {
         System.out.println("[INFO] RELAY[1,2,3]: Created!");
 
         joystick = new Joystick(1);
-        joystick2 = new Joystick(2);
+        //joystick2 = new Joystick(2);
         System.out.println("[INFO] JOYSTICK[1|2]: Created!");
 
         cock = new Solenoid(1);
@@ -68,9 +67,9 @@ public class Console {
 
         System.out.println("[INFO] Digital I/O: Enabled.");
 
-        sonic = new Ultrasonic(4, 2);  // TODO: FIX NUMBERS pingDigOut, echoDigIn
+        sonic = new Ultrasonic(4, 2);
         sonic.setEnabled(true);
-        pot = new AnalogPotentiometer(2, 1000);
+        pot = new AnalogPotentiometer(2, 10);
 
         autonomousTimer = new Timer();
         t = new Timer();
@@ -82,29 +81,32 @@ public class Console {
 
     public void run() {
 
-        //robotdrive.arcadeDrive(joystick, true);
-        robotdrive.tankDrive(joystick2, joystick);
-
-        if (joystick.getRawButton(6)) {
-            int distance = (int) (18.0 * 12 - sonic.getRangeInches());
-            if (distance == 1) {
-            }
-
-        } else if (joystick.getRawButton(11)) {
-            double error = 18.0 * 12 - sonic.getRangeInches();
-            double ucommand = 0.5 * error;
-            robotdrive.tankDrive(ucommand, ucommand);
-            LCD.println(DriverStationLCD.Line.kUser3, 1, "US " + sonic.getRangeInches() + " " + ucommand);
-            LCD.updateLCD();
-        }
-
-        if (joystick.getRawButton(5)) {
+        robotdrive.arcadeDrive(joystick, true);
+        
+        /**
+         * robotdrive.tankDrive(joystick2, joystick);
+         * if (joystick.getRawButton(6)) { int distance = (int) (18.0 * 12 -
+         * sonic.getRangeInches()); if (distance == 1) { } } else if
+         * (joystick.getRawButton(11)) { if (joystick.getRawButton(6)) { double
+         * anumber = 18.0 * 12 - sonic.getRangeInches();
+         * System.out.println("[INFO] Distance: " + anumber + " ***"); }
+         */
+        
+        if (joystick.getRawButton(6) && pot.get() <= 10) {
             wormgear.set(Relay.Value.kForward);
-        } else if (joystick.getRawButton(4)) {
+        } else if (joystick.getRawButton(7) && pot.get() >= 2) {
             wormgear.set(Relay.Value.kReverse);
         } else {
             wormgear.set(Relay.Value.kOff);
         }
+
+        double error = 18.0 * 12 - sonic.getRangeInches();
+        double ucommand = 0.5 * error;
+        robotdrive.arcadeDrive(joystick, true);
+        LCD.println(DriverStationLCD.Line.kUser3, 1, "US " + sonic.getRangeInches() + " " + ucommand);
+        LCD.println(DriverStationLCD.Line.kUser2, 1, "POT: " + pot.get());
+        LCD.updateLCD();
+        // }
 
         if (joystick.getRawButton(1)) {
             t.start();
@@ -133,11 +135,6 @@ public class Console {
             System.out.println("[INFO] @Shooter@: Please wait 2 seconds before another fire!");
             t.stop();
             t.reset();
-        }
-
-        if (joystick.getRawButton(6)) {
-            double anumber = 18.0 * 12 - sonic.getRangeInches();
-            System.out.println("[INFO] Distance: " + anumber + " ***");
         }
 
         if (joystick.getRawButton(3) == true) {
