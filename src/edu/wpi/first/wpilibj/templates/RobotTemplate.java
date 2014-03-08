@@ -40,6 +40,10 @@ public class RobotTemplate extends IterativeRobot {
 
     }
 
+    public void disabledInit() {
+
+    }
+
     public void autonomousInit() {
         console.autoInit();
     }
