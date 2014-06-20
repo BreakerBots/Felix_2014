@@ -1,4 +1,4 @@
-Eclipse
+Breaker Bots Robot Code
 =======
 
-Robot code for FIRST Robotics Team 5104 for year 2014
+Robot code for FIRST Robotics Team 5104.
