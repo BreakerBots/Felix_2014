@@ -13,10 +13,19 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class Console {
-
-    //1 Compressor
-    //2 Wormgear
-    //3 Eltoro opener thingy at the top of the thing.
+    
+    /**
+     * 
+     * FELIX the robot, version 1.1 final.
+     * Modified template.
+     * 
+     * 
+     * Robot Code 2014 FRC Team #5104
+     * @author PSCA119
+     * 
+     * 
+     */ 
+    
     public Talon motorLeft;
     public Talon motorRight;
     public RobotDriveSteering robotdrive;
@@ -47,10 +56,10 @@ public class Console {
         
         motorLeft = new Talon(1);
         motorRight = new Talon(2);
-        System.out.println("[INFO] TALON[1|2]: Created!");
+        System.out.println("[INFO] TALON[1&2]: Created!");
         elToro1 = new Talon(3);
         elToro2 = new Talon(4);
-        System.out.println("[INFO] TALON[3|4]: Created!");
+        System.out.println("[INFO] TALON[3&4]: Created!");
         robotdrive = new RobotDriveSteering(motorLeft, motorRight);
         robotdrive.setInvertedMotor(RobotDriveSteering.MotorType.kRearLeft, true);
         robotdrive.setInvertedMotor(RobotDriveSteering.MotorType.kRearRight, true);
@@ -60,11 +69,11 @@ public class Console {
         
         wormgear = new Relay(2);
         spreader = new Relay(3);
-        System.out.println("[INFO] RELAY[1,2,3]: Created!");
+        System.out.println("[INFO] RELAY[1&2&3]: Created!");
         
         joystick = new Joystick(1);
         //joystick2 = new Joystick(2);
-        System.out.println("[INFO] JOYSTICK[1|2]: Created!");
+        System.out.println("[INFO] JOYSTICK[1&2]: Created!");
         
         cock = new Solenoid(1);
         uncock = new Solenoid(2);
@@ -93,14 +102,6 @@ public class Console {
         
         robotdrive.arcadeDrive(joystick, true);
 
-        /**
-         * robotdrive.tankDrive(joystick2, joystick); if
-         * (joystick.getRawButton(6)) { int distance = (int) (18.0 * 12 -
-         * sonic.getRangeInches()); if (distance == 1) { } } else if
-         * (joystick.getRawButton(11)) { if (joystick.getRawButton(6)) { double
-         * anumber = 18.0 * 12 - sonic.getRangeInches();
-         * System.out.println("[INFO] Distance: " + anumber + " ***"); }
-         */
         if (joystick.getRawButton(6) && pot.get() <= 13.5) {
             wormgear.set(Relay.Value.kForward);
         } else if (joystick.getRawButton(7) && pot.get() >= 5.01) {
@@ -143,9 +144,13 @@ public class Console {
         LCD.println(DriverStationLCD.Line.kUser2, 1, "Potentiometer: " + pot.get());
         LCD.println(DriverStationLCD.Line.kUser3, 1, "Speed(RM): " + R + " %");
         LCD.println(DriverStationLCD.Line.kUser4, 1, "Speed(LM): " + L + " %");
-        LCD.println(DriverStationLCD.Line.kUser6, 1, ":   DS-UI: Malon[Ver]1.0");
+        LCD.println(DriverStationLCD.Line.kUser6, 1, ":   DS-UI: Felix[Ver]1.1");
         LCD.updateLCD();
         
+        /**
+         * El toro mech
+         * 
+         */
         if (joystick.getRawButton(3) == true) {
             elToro1.set(-0.75);
             elToro2.set(0.75);
